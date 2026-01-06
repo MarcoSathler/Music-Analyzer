@@ -5,8 +5,6 @@ FEATURE: Automatically renames files with pattern: [Key] - [BPM] - [Original Nam
 
 Requirements:
     pip install librosa numpy mutagen
-
-    (Optional) pip install tempocnn
 """
 
 import csv
@@ -17,14 +15,14 @@ import os
 import re
 import shutil
 import tempfile
+import librosa
+import mutagen
+import numpy as np
+
 from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Union
-
-import librosa
-import mutagen  # For metadata
-import numpy as np
 from tkinter import (
     Tk, filedialog, messagebox, simpledialog,
     Toplevel, Label, Entry, Button, Checkbutton,
@@ -122,7 +120,7 @@ class MusicAnalyzer:
             )
 
             # Convert to float if necessary
-            tempo = float(tempo)
+            tempo = int(float(tempo))
 
             # Correct octave error
             if tempo < 70:
@@ -132,17 +130,9 @@ class MusicAnalyzer:
                 tempo = tempo / 2
                 logger.debug(f"  → BPM too high, halving: {tempo}")
 
-            # Custom rounding
-            # If decimal > 0.10, round up (120.12 -> 121)
-            # If decimal <= 0.10, keep integer (120.06 -> 120)
-            decimal_part = tempo - int(tempo)
-            if decimal_part > 0.10:
-                bpm_final = math.ceil(tempo)
-            else:
-                bpm_final = int(tempo)
+            logger.info(f"  ✓ BPM detected: {tempo:.2f} ")
 
-            logger.info(f"  ✓ BPM detected: {tempo:.2f} → Final: {bpm_final}")
-            return bpm_final
+            return tempo
 
         except Exception as e:
             logger.error(f"Error detecting BPM in {audio_path}: {str(e)}")
