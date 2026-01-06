@@ -37,15 +37,6 @@ python music_analyzer.py
 
 ---
 
-## 📂 File Structure
-
-- `music_analyzer.py`: **THE BRAIN.** Main script containing all logic.
-- `GET_STARTED.md`: Quick setup guide.
-- `RENAMING_GUIDE.md`: Details on how renaming works.
-- `PROJECT_OVERVIEW.md`: This file.
-
----
-
 ## 🚀 Version Highlights
 
 1. **Zero External Dependencies**: No more KeyFinder or PyMusicKit. Runs natively.
@@ -116,7 +107,7 @@ pip install librosa numpy mutagen
 ---
 
 **Version:** 2026.1 (Native)
-**Author:** Music Analyzer Team
+**Author:** Marco Sathler
 
 # 🎵 Renaming Guide (Music Analyzer)
 
@@ -176,4 +167,5 @@ Swap specific characters. Use the format `old:new`.
 
 ## 📋 Report
 A `.csv` file is generated in the analyzed folder detailing the "Before and After" of every track.
+
 
