@@ -4,7 +4,7 @@ Script to analyze BPM and Key of multiple music files in a folder.
 FEATURE: Automatically renames files with pattern: [Key] - [BPM] - [Original Name]
 
 Requirements:
-    pip install librosa numpy mutagen
+    pip install librosa numpy mutagen taglib
 """
 
 import csv
@@ -18,6 +18,7 @@ import tempfile
 import librosa
 import mutagen
 import numpy as np
+import taglib
 
 from collections import defaultdict
 from datetime import datetime
@@ -223,8 +224,12 @@ class MusicAnalyzer:
                 return False
 
             # Update title
-            audio['title'] = [new_title]
-            audio.save()
+            try:
+                audio['title'] = [new_title]
+            except (TypeError, KeyError):
+                with taglib.File(file_path, save_on_exit=True) as song:
+                    song.tags['TITLE'] = [new_title]
+
             logger.info(f"  ✓ Metadata Title updated: '{new_title}'")
             return True
 
