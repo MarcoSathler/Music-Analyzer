@@ -226,6 +226,7 @@ class MusicAnalyzer:
             # Update title
             try:
                 audio['title'] = [new_title]
+                audio.save()
             except (TypeError, KeyError):
                 with taglib.File(file_path, save_on_exit=True) as song:
                     song.tags['TITLE'] = [new_title]
